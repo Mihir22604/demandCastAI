@@ -1,0 +1,29 @@
+# ==============================================================================
+# DemandCast AI - Production Dependencies Specification
+# ==============================================================================
+
+# Core Machine Learning & Data Processing
+numpy>=1.26.0,<2.0.0
+pandas>=2.2.0,<3.0.0
+scipy>=1.11.0,<2.0.0
+scikit-learn==1.6.1
+lightgbm>=4.3.0,<5.0.0
+joblib>=1.4.0,<2.0.0
+
+# REST API & Web Serving Microservice
+fastapi>=0.115.0,<1.0.0
+uvicorn[standard]>=0.32.0,<1.0.0
+pydantic>=2.9.0,<3.0.0
+python-multipart>=0.0.12,<1.0.0
+
+# Interactive Web Dashboard
+streamlit>=1.32.0,<2.0.0
+requests>=2.31.0,<3.0.0
+
+# Testing, Validation & Profiling
+httpx>=0.27.0,<1.0.0
+pytest>=8.0.0,<9.0.0
+
+# Visualization & Reporting
+matplotlib>=3.8.0,<4.0.0
+seaborn>=0.13.0,<1.0.0

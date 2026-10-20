@@ -1,0 +1,46 @@
+{
+    "timestamp_utc": "2026-10-20T07:20:12Z",
+    "operational_samples_evaluated": 12,
+    "baseline_samples_count": 43,
+    "drift_significance_alpha": 0.05,
+    "overall_drift_status": "MODERATE_DRIFT_ALERT",
+    "total_drifted_features": 1,
+    "feature_level_audit": {
+        "banking_orders_2": {
+            "ks_statistic": 0.1589,
+            "p_value": 0.93693,
+            "is_drifted": false,
+            "baseline_mean": 80521.42,
+            "operational_mean": 76418.83,
+            "baseline_std": 38136.54,
+            "operational_std": 34954.54
+        },
+        "banking_orders_1": {
+            "ks_statistic": 0.2791,
+            "p_value": 0.37828,
+            "is_drifted": false,
+            "baseline_mean": 48998.23,
+            "operational_mean": 47367.67,
+            "baseline_std": 49249.3,
+            "operational_std": 32540.91
+        },
+        "traffic_controller_orders": {
+            "ks_statistic": 0.5543,
+            "p_value": 0.00342,
+            "is_drifted": true,
+            "baseline_mean": 47023.12,
+            "operational_mean": 35982.92,
+            "baseline_std": 11142.79,
+            "operational_std": 7812.26
+        },
+        "target_lag5": {
+            "ks_statistic": 0.3081,
+            "p_value": 0.27103,
+            "is_drifted": false,
+            "baseline_mean": 309.54,
+            "operational_mean": 266.56,
+            "baseline_std": 97.2,
+            "operational_std": 63.66
+        }
+    }
+}

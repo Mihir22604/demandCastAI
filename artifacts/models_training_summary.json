@@ -1,0 +1,97 @@
+{
+    "stage": "Stage 8: Build Multiple Machine Learning Models",
+    "model_selection_count": 4,
+    "selected_architectures": [
+        "Logistic_Regression",
+        "Decision_Tree",
+        "Random_Forest",
+        "LightGBM"
+    ],
+    "training_sample_count": 43,
+    "feature_count": 8,
+    "features": [
+        "banking_orders_2",
+        "banking_orders_1",
+        "day_cos",
+        "day_of_week",
+        "banking_ratio_1_2",
+        "traffic_controller_orders",
+        "week_of_month",
+        "target_lag5"
+    ],
+    "target": "target_capacity_tier",
+    "models": {
+        "Logistic_Regression": {
+            "model_family": "LogisticRegression",
+            "artifact_path": "C:\\Users\\mihir\\Desktop\\DemandCast AI\\artifacts\\models\\logistic_regression.joblib",
+            "training_time_ms": 93.99,
+            "train_accuracy": 0.8605,
+            "timeseries_cv_mean_accuracy": 0.6667,
+            "timeseries_cv_std_accuracy": 0.1886,
+            "key_hyperparameters": {
+                "C": "1.0",
+                "class_weight": "None",
+                "dual": "False",
+                "fit_intercept": "True",
+                "intercept_scaling": "1",
+                "l1_ratio": "None",
+                "max_iter": "1000",
+                "multi_class": "deprecated"
+            }
+        },
+        "Decision_Tree": {
+            "model_family": "DecisionTreeClassifier",
+            "artifact_path": "C:\\Users\\mihir\\Desktop\\DemandCast AI\\artifacts\\models\\decision_tree.joblib",
+            "training_time_ms": 46.92,
+            "train_accuracy": 0.7674,
+            "timeseries_cv_mean_accuracy": 0.6333,
+            "timeseries_cv_std_accuracy": 0.1247,
+            "key_hyperparameters": {
+                "ccp_alpha": "0.0",
+                "class_weight": "None",
+                "criterion": "entropy",
+                "max_depth": "3",
+                "max_features": "None",
+                "max_leaf_nodes": "None",
+                "min_impurity_decrease": "0.0",
+                "min_samples_leaf": "2"
+            }
+        },
+        "Random_Forest": {
+            "model_family": "RandomForestClassifier",
+            "artifact_path": "C:\\Users\\mihir\\Desktop\\DemandCast AI\\artifacts\\models\\random_forest.joblib",
+            "training_time_ms": 1200.71,
+            "train_accuracy": 0.9767,
+            "timeseries_cv_mean_accuracy": 0.6667,
+            "timeseries_cv_std_accuracy": 0.1886,
+            "key_hyperparameters": {
+                "bootstrap": "True",
+                "ccp_alpha": "0.0",
+                "class_weight": "None",
+                "criterion": "gini",
+                "max_depth": "4",
+                "max_features": "sqrt",
+                "max_leaf_nodes": "None",
+                "max_samples": "None"
+            }
+        },
+        "LightGBM": {
+            "model_family": "LGBMClassifier",
+            "artifact_path": "C:\\Users\\mihir\\Desktop\\DemandCast AI\\artifacts\\models\\lightgbm.joblib",
+            "training_time_ms": 368.21,
+            "train_accuracy": 0.907,
+            "timeseries_cv_mean_accuracy": 0.4333,
+            "timeseries_cv_std_accuracy": 0.1247,
+            "key_hyperparameters": {
+                "boosting_type": "gbdt",
+                "class_weight": "None",
+                "colsample_bytree": "1.0",
+                "importance_type": "split",
+                "learning_rate": "0.1",
+                "max_depth": "3",
+                "min_child_samples": "20",
+                "min_child_weight": "0.001"
+            }
+        }
+    }
+}

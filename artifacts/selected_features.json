@@ -1,0 +1,117 @@
+{
+    "project": "DemandCast AI",
+    "stage": "Stage 6: Feature Selection",
+    "total_candidate_features_evaluated": 18,
+    "total_features_selected": 8,
+    "selection_methods_applied": [
+        "Mutual Information Regression (non-linear dependency)",
+        "Random Forest Gini Feature Importance (tree-based)",
+        "Pearson Correlation Analysis (linear association)",
+        "Time-Series Cross-Validation Ablation (generalization error)"
+    ],
+    "validation_benchmark": {
+        "validation_strategy": "TimeSeriesSplit(n_splits=3)",
+        "model_tested": "Pipeline(StandardScaler(), Ridge(alpha=10.0))",
+        "rmse_before_selection_all_18_features": 45.36,
+        "rmse_after_selection_8_features": 44.56,
+        "relative_improvement_percentage": 1.76
+    },
+    "selected_features_dictionary": {
+        "banking_orders_2": {
+            "feature_name": "banking_orders_2",
+            "feature_category": "Exogenous Financial Driver",
+            "selection_metrics": {
+                "mutual_information_score": 0.424,
+                "random_forest_importance": 0.5564,
+                "pearson_correlation": 0.7666,
+                "absolute_correlation": 0.7666
+            },
+            "selection_threshold_met": true,
+            "selection_rationale": "Leading exogenous financial transaction indicator, highest mutual info (0.4240) and RF importance (0.5564)"
+        },
+        "banking_orders_1": {
+            "feature_name": "banking_orders_1",
+            "feature_category": "Exogenous Financial Driver",
+            "selection_metrics": {
+                "mutual_information_score": 0.2628,
+                "random_forest_importance": 0.2008,
+                "pearson_correlation": 0.6672,
+                "absolute_correlation": 0.6672
+            },
+            "selection_threshold_met": true,
+            "selection_rationale": "Secondary financial channel providing complementary commercial volume signal (r = +0.6672, MI = 0.2628)"
+        },
+        "day_cos": {
+            "feature_name": "day_cos",
+            "feature_category": "Temporal Calendar Coordinate",
+            "selection_metrics": {
+                "mutual_information_score": 0.3105,
+                "random_forest_importance": 0.0244,
+                "pearson_correlation": 0.4764,
+                "absolute_correlation": 0.4764
+            },
+            "selection_threshold_met": true,
+            "selection_rationale": "Smooth continuous cyclical encoding capturing intra-week decay without boundary discontinuity (MI = 0.3105)"
+        },
+        "day_of_week": {
+            "feature_name": "day_of_week",
+            "feature_category": "Temporal Calendar Coordinate",
+            "selection_metrics": {
+                "mutual_information_score": 0.2205,
+                "random_forest_importance": 0.0346,
+                "pearson_correlation": -0.4562,
+                "absolute_correlation": 0.4562
+            },
+            "selection_threshold_met": true,
+            "selection_rationale": "Primary operational decay driver from Monday peak (390.21) to Friday trough (263.35) (r = -0.4562)"
+        },
+        "banking_ratio_1_2": {
+            "feature_name": "banking_ratio_1_2",
+            "feature_category": "Exogenous Financial Driver",
+            "selection_metrics": {
+                "mutual_information_score": 0.1347,
+                "random_forest_importance": 0.0387,
+                "pearson_correlation": 0.2056,
+                "absolute_correlation": 0.2056
+            },
+            "selection_threshold_met": true,
+            "selection_rationale": "Financial velocity ratio comparing Channel 1 to Channel 2 transaction volume (MI = 0.1347)"
+        },
+        "traffic_controller_orders": {
+            "feature_name": "traffic_controller_orders",
+            "feature_category": "Exogenous Transport Flow",
+            "selection_metrics": {
+                "mutual_information_score": 0.1478,
+                "random_forest_importance": 0.0212,
+                "pearson_correlation": 0.099,
+                "absolute_correlation": 0.099
+            },
+            "selection_threshold_met": true,
+            "selection_rationale": "Municipal transport traffic indicator reflecting city-wide commercial movement (MI = 0.1478)"
+        },
+        "week_of_month": {
+            "feature_name": "week_of_month",
+            "feature_category": "Temporal Calendar Coordinate",
+            "selection_metrics": {
+                "mutual_information_score": 0.1065,
+                "random_forest_importance": 0.0095,
+                "pearson_correlation": 0.2411,
+                "absolute_correlation": 0.2411
+            },
+            "selection_threshold_met": true,
+            "selection_rationale": "Captures month-end commercial fulfillment acceleration peaking in Week 5 (MI = 0.1065, r = +0.2411)"
+        },
+        "target_lag5": {
+            "feature_name": "target_lag5",
+            "feature_category": "Temporal Lag Momentum",
+            "selection_metrics": {
+                "mutual_information_score": 0.0637,
+                "random_forest_importance": 0.0164,
+                "pearson_correlation": 0.1014,
+                "absolute_correlation": 0.1014
+            },
+            "selection_threshold_met": true,
+            "selection_rationale": "Captures 1-week cyclical demand momentum without lookahead leakage (5 business days/week)"
+        }
+    }
+}

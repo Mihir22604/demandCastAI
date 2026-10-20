@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # ----------------------------------------------------------------------------
+  # Service 1: FastAPI REST Machine Learning Backend
+  # ----------------------------------------------------------------------------
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: demandcast-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - LOKY_MAX_CPU_COUNT=2
+    volumes:
+      - ./artifacts:/app/artifacts:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    networks:
+      - demandcast-network
+
+  # ----------------------------------------------------------------------------
+  # Service 2: Streamlit Interactive Web Dashboard Frontend
+  # ----------------------------------------------------------------------------
+  ui:
+    build:
+      context: .
+      dockerfile: Dockerfile.ui
+    container_name: demandcast-ui
+    restart: unless-stopped
+    ports:
+      - "8501:8501"
+    environment:
+      - DEMANDCAST_API_URL=http://api:8000/predict
+      - DEMANDCAST_HEALTH_URL=http://api:8000/health
+      - LOKY_MAX_CPU_COUNT=2
+    depends_on:
+      api:
+        condition: service_healthy
+    volumes:
+      - ./artifacts:/app/artifacts:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    networks:
+      - demandcast-network
+
+networks:
+  demandcast-network:
+    driver: bridge

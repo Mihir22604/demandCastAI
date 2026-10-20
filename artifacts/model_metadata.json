@@ -1,0 +1,169 @@
+{
+    "model_name": "DemandCast AI - Logistics Demand Operational Capacity Forecaster",
+    "model_version": "1.0.0",
+    "stage": "Stage 12: Save the Model",
+    "status": "Production-Ready / Certified for API Deployment",
+    "timestamp_utc": "2026-10-20T06:57:29Z",
+    "champion_algorithm": {
+        "name": "LightGBM Classifier",
+        "class_path": "lightgbm.sklearn.LGBMClassifier",
+        "hyperparameters": {
+            "n_estimators": 50,
+            "max_depth": 3,
+            "num_leaves": 7,
+            "learning_rate": 0.1,
+            "min_child_samples": 20,
+            "subsample": 0.8,
+            "random_state": 42,
+            "verbose": -1
+        }
+    },
+    "serialized_artifacts": {
+        "pickle": {
+            "filename": "model.pkl",
+            "relative_path": "artifacts\\model.pkl",
+            "size_bytes": 59418,
+            "size_kb": 58.03,
+            "sha256_checksum": "1086698a3c91bdc739170ed06a777e343d87de4f0109a58b85a4937584f946b5",
+            "format": "pickle (protocol 5)"
+        },
+        "joblib": {
+            "filename": "model.joblib",
+            "relative_path": "artifacts\\model.joblib",
+            "size_bytes": 14864,
+            "size_kb": 14.52,
+            "sha256_checksum": "d48a292a42fa87d4eb7b095b12fb6cbcc0b72e6b59289f91651ab38568852416",
+            "compression": "zlib (level 3)"
+        }
+    },
+    "input_feature_contract": {
+        "feature_count": 8,
+        "expected_column_order": [
+            "banking_orders_2",
+            "banking_orders_1",
+            "day_cos",
+            "day_of_week",
+            "banking_ratio_1_2",
+            "traffic_controller_orders",
+            "week_of_month",
+            "target_lag5"
+        ],
+        "feature_specifications": {
+            "banking_orders_2": {
+                "data_type": "float64 / int64",
+                "description": "Exogenous clearing orders from Primary Commercial Banking Channel 2",
+                "acceptable_range": [
+                    0,
+                    500000
+                ],
+                "physical_unit": "Transaction units"
+            },
+            "banking_orders_1": {
+                "data_type": "float64 / int64",
+                "description": "Exogenous clearing orders from Secondary Commercial Banking Channel 1",
+                "acceptable_range": [
+                    0,
+                    300000
+                ],
+                "physical_unit": "Transaction units"
+            },
+            "day_cos": {
+                "data_type": "float64",
+                "description": "Continuous trigonometric cosine encoding of Day of Week",
+                "acceptable_range": [
+                    -1.0,
+                    1.0
+                ],
+                "physical_unit": "Trigonometric coordinate"
+            },
+            "day_of_week": {
+                "data_type": "int64",
+                "description": "Discrete calendar day of business week (2=Monday, ..., 6=Friday)",
+                "acceptable_range": [
+                    2,
+                    6
+                ],
+                "physical_unit": "Calendar day index"
+            },
+            "banking_ratio_1_2": {
+                "data_type": "float64",
+                "description": "Inter-channel velocity ratio: banking_orders_1 / (banking_orders_2 + 1)",
+                "acceptable_range": [
+                    0.0,
+                    5.0
+                ],
+                "physical_unit": "Ratio"
+            },
+            "traffic_controller_orders": {
+                "data_type": "float64 / int64",
+                "description": "Municipal freight traffic controller daily dispatch volume",
+                "acceptable_range": [
+                    0,
+                    200000
+                ],
+                "physical_unit": "Volume count"
+            },
+            "week_of_month": {
+                "data_type": "int64",
+                "description": "Sequential week of the month (1 to 5)",
+                "acceptable_range": [
+                    1,
+                    5
+                ],
+                "physical_unit": "Week index"
+            },
+            "target_lag5": {
+                "data_type": "float64",
+                "description": "Prior weekly demand momentum (same business day of previous week)",
+                "acceptable_range": [
+                    100.0,
+                    700.0
+                ],
+                "physical_unit": "Thousands of orders"
+            }
+        }
+    },
+    "target_operational_specification": {
+        "target_variable": "target_capacity_tier",
+        "classes": [
+            {
+                "class_id": 0,
+                "label": "Low Demand (<240)",
+                "boundary": "Total orders < 240.0",
+                "logistics_action": "Ground surplus haulage tractors, schedule vehicle maintenance"
+            },
+            {
+                "class_id": 1,
+                "label": "Normal Demand (240-340)",
+                "boundary": "240.0 <= Total orders <= 340.0",
+                "logistics_action": "Standard shift operations, baseline cross-dock staffing"
+            },
+            {
+                "class_id": 2,
+                "label": "Surge Demand (>340)",
+                "boundary": "Total orders > 340.0",
+                "logistics_action": "Trigger overtime, dispatch reserve line-haul carriers"
+            }
+        ]
+    },
+    "evaluation_metrics_test_set": {
+        "test_sample_count": 12,
+        "test_accuracy": 0.75,
+        "test_weighted_f1": 0.75,
+        "test_macro_f1": 0.7,
+        "low_demand_precision": 1.0,
+        "low_demand_recall": 0.6667,
+        "normal_demand_recall": 0.8571,
+        "surge_demand_recall": 0.5,
+        "inference_latency_mean_ms": 2.917,
+        "inference_latency_p95_ms": 3.986
+    },
+    "environment_dependencies": {
+        "python_version": "3.11.x / 3.12.x",
+        "scikit_learn": "1.5.x+",
+        "lightgbm": "4.x+",
+        "joblib": "1.4.x+",
+        "numpy": "1.26.x+",
+        "pandas": "2.2.x+"
+    }
+}

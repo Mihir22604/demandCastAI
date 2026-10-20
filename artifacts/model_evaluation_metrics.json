@@ -1,0 +1,395 @@
+{
+    "stage": "Stage 9: Model Evaluation",
+    "model_evaluation_count": 4,
+    "selected_models": [
+        "Logistic_Regression",
+        "Decision_Tree",
+        "Random_Forest",
+        "LightGBM"
+    ],
+    "test_sample_size": 12,
+    "test_day_indices": [
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+    ],
+    "class_distribution_test": {
+        "0_low_demand": 3,
+        "1_normal_demand": 7,
+        "2_surge_demand": 2
+    },
+    "models_evaluation": {
+        "Logistic_Regression": {
+            "model_name": "Logistic_Regression",
+            "family": "LogisticRegression",
+            "accuracy": 0.6667,
+            "macro_precision": 0.7222,
+            "macro_recall": 0.5635,
+            "macro_f1": 0.5833,
+            "weighted_f1": 0.6458,
+            "roc_auc_ovr": 0.8139,
+            "train_accuracy": 0.8605,
+            "confusion_matrix": [
+                [
+                    1,
+                    2,
+                    0
+                ],
+                [
+                    0,
+                    6,
+                    1
+                ],
+                [
+                    0,
+                    1,
+                    1
+                ]
+            ],
+            "classification_report": {
+                "Low Demand (<240)": {
+                    "precision": 1.0,
+                    "recall": 0.3333333333333333,
+                    "f1-score": 0.5,
+                    "support": 3.0
+                },
+                "Normal Demand (240-340)": {
+                    "precision": 0.6666666666666666,
+                    "recall": 0.8571428571428571,
+                    "f1-score": 0.75,
+                    "support": 7.0
+                },
+                "Surge Demand (>340)": {
+                    "precision": 0.5,
+                    "recall": 0.5,
+                    "f1-score": 0.5,
+                    "support": 2.0
+                },
+                "accuracy": 0.6666666666666666,
+                "macro avg": {
+                    "precision": 0.7222222222222222,
+                    "recall": 0.5634920634920635,
+                    "f1-score": 0.5833333333333334,
+                    "support": 12.0
+                },
+                "weighted avg": {
+                    "precision": 0.7222222222222222,
+                    "recall": 0.6666666666666666,
+                    "f1-score": 0.6458333333333334,
+                    "support": 12.0
+                }
+            },
+            "predictions": [
+                1,
+                1,
+                2,
+                1,
+                1,
+                0,
+                1,
+                2,
+                1,
+                1,
+                1,
+                1
+            ],
+            "actuals": [
+                2,
+                1,
+                2,
+                1,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1
+            ]
+        },
+        "Decision_Tree": {
+            "model_name": "Decision_Tree",
+            "family": "DecisionTreeClassifier",
+            "accuracy": 0.6667,
+            "macro_precision": 0.6111,
+            "macro_recall": 0.627,
+            "macro_f1": 0.6136,
+            "weighted_f1": 0.6749,
+            "roc_auc_ovr": 0.7222,
+            "train_accuracy": 0.7674,
+            "confusion_matrix": [
+                [
+                    2,
+                    1,
+                    0
+                ],
+                [
+                    1,
+                    5,
+                    1
+                ],
+                [
+                    1,
+                    0,
+                    1
+                ]
+            ],
+            "classification_report": {
+                "Low Demand (<240)": {
+                    "precision": 0.5,
+                    "recall": 0.6666666666666666,
+                    "f1-score": 0.5714285714285714,
+                    "support": 3.0
+                },
+                "Normal Demand (240-340)": {
+                    "precision": 0.8333333333333334,
+                    "recall": 0.7142857142857143,
+                    "f1-score": 0.7692307692307693,
+                    "support": 7.0
+                },
+                "Surge Demand (>340)": {
+                    "precision": 0.5,
+                    "recall": 0.5,
+                    "f1-score": 0.5,
+                    "support": 2.0
+                },
+                "accuracy": 0.6666666666666666,
+                "macro avg": {
+                    "precision": 0.6111111111111112,
+                    "recall": 0.626984126984127,
+                    "f1-score": 0.6135531135531136,
+                    "support": 12.0
+                },
+                "weighted avg": {
+                    "precision": 0.6944444444444445,
+                    "recall": 0.6666666666666666,
+                    "f1-score": 0.6749084249084248,
+                    "support": 12.0
+                }
+            },
+            "predictions": [
+                0,
+                1,
+                2,
+                0,
+                0,
+                1,
+                0,
+                2,
+                1,
+                1,
+                1,
+                1
+            ],
+            "actuals": [
+                2,
+                1,
+                2,
+                1,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1
+            ]
+        },
+        "Random_Forest": {
+            "model_name": "Random_Forest",
+            "family": "RandomForestClassifier",
+            "accuracy": 0.5833,
+            "macro_precision": 0.3667,
+            "macro_recall": 0.4524,
+            "macro_f1": 0.402,
+            "weighted_f1": 0.4951,
+            "roc_auc_ovr": 0.8407,
+            "train_accuracy": 0.9767,
+            "confusion_matrix": [
+                [
+                    0,
+                    3,
+                    0
+                ],
+                [
+                    0,
+                    6,
+                    1
+                ],
+                [
+                    0,
+                    1,
+                    1
+                ]
+            ],
+            "classification_report": {
+                "Low Demand (<240)": {
+                    "precision": 0.0,
+                    "recall": 0.0,
+                    "f1-score": 0.0,
+                    "support": 3.0
+                },
+                "Normal Demand (240-340)": {
+                    "precision": 0.6,
+                    "recall": 0.8571428571428571,
+                    "f1-score": 0.7058823529411765,
+                    "support": 7.0
+                },
+                "Surge Demand (>340)": {
+                    "precision": 0.5,
+                    "recall": 0.5,
+                    "f1-score": 0.5,
+                    "support": 2.0
+                },
+                "accuracy": 0.5833333333333334,
+                "macro avg": {
+                    "precision": 0.3666666666666667,
+                    "recall": 0.4523809523809524,
+                    "f1-score": 0.40196078431372556,
+                    "support": 12.0
+                },
+                "weighted avg": {
+                    "precision": 0.43333333333333335,
+                    "recall": 0.5833333333333334,
+                    "f1-score": 0.4950980392156863,
+                    "support": 12.0
+                }
+            },
+            "predictions": [
+                1,
+                1,
+                2,
+                1,
+                1,
+                1,
+                1,
+                2,
+                1,
+                1,
+                1,
+                1
+            ],
+            "actuals": [
+                2,
+                1,
+                2,
+                1,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1
+            ]
+        },
+        "LightGBM": {
+            "model_name": "LightGBM",
+            "family": "LGBMClassifier",
+            "accuracy": 0.75,
+            "macro_precision": 0.75,
+            "macro_recall": 0.6746,
+            "macro_f1": 0.7,
+            "weighted_f1": 0.75,
+            "roc_auc_ovr": 0.713,
+            "train_accuracy": 0.907,
+            "confusion_matrix": [
+                [
+                    2,
+                    1,
+                    0
+                ],
+                [
+                    0,
+                    6,
+                    1
+                ],
+                [
+                    0,
+                    1,
+                    1
+                ]
+            ],
+            "classification_report": {
+                "Low Demand (<240)": {
+                    "precision": 1.0,
+                    "recall": 0.6666666666666666,
+                    "f1-score": 0.8,
+                    "support": 3.0
+                },
+                "Normal Demand (240-340)": {
+                    "precision": 0.75,
+                    "recall": 0.8571428571428571,
+                    "f1-score": 0.8,
+                    "support": 7.0
+                },
+                "Surge Demand (>340)": {
+                    "precision": 0.5,
+                    "recall": 0.5,
+                    "f1-score": 0.5,
+                    "support": 2.0
+                },
+                "accuracy": 0.75,
+                "macro avg": {
+                    "precision": 0.75,
+                    "recall": 0.6746031746031745,
+                    "f1-score": 0.7000000000000001,
+                    "support": 12.0
+                },
+                "weighted avg": {
+                    "precision": 0.7708333333333334,
+                    "recall": 0.75,
+                    "f1-score": 0.75,
+                    "support": 12.0
+                }
+            },
+            "predictions": [
+                1,
+                1,
+                2,
+                1,
+                0,
+                0,
+                1,
+                2,
+                1,
+                1,
+                1,
+                1
+            ],
+            "actuals": [
+                2,
+                1,
+                2,
+                1,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1
+            ]
+        }
+    },
+    "best_performing_model": {
+        "model_name": "LightGBM",
+        "test_accuracy": 0.75,
+        "weighted_f1": 0.75,
+        "macro_f1": 0.7,
+        "selection_rationale": "Achieves the highest test accuracy (75.00%) and highest weighted F1 (0.7500) while successfully predicting out-of-time demand shifts."
+    }
+}

@@ -1,0 +1,56 @@
+{
+    "stage": "Stage 7: Train/Test Split",
+    "split_strategy": "Chronological Out-of-Time Partition",
+    "random_shuffle_applied": false,
+    "rationale": "Prevents temporal lookahead leakage and auto-correlated memory corruption in sequential time-series logistics forecasting.",
+    "split_cutoff_day_index": 48,
+    "total_observations": 55,
+    "train_set": {
+        "sample_count": 43,
+        "percentage": 78.18,
+        "day_index_range": [
+            5,
+            47
+        ],
+        "class_distribution": {
+            "0_low_demand": 10,
+            "1_normal_demand": 22,
+            "2_surge_demand": 11
+        },
+        "continuous_target_summary": {
+            "mean": 307.31,
+            "std": 87.91,
+            "min": 207.36,
+            "max": 616.45
+        }
+    },
+    "test_set": {
+        "sample_count": 12,
+        "percentage": 21.82,
+        "day_index_range": [
+            48,
+            59
+        ],
+        "class_distribution": {
+            "0_low_demand": 3,
+            "1_normal_demand": 7,
+            "2_surge_demand": 2
+        },
+        "continuous_target_summary": {
+            "mean": 284.72,
+            "std": 62.93,
+            "min": 188.6,
+            "max": 402.61
+        }
+    },
+    "features": [
+        "banking_orders_2",
+        "banking_orders_1",
+        "day_cos",
+        "day_of_week",
+        "banking_ratio_1_2",
+        "traffic_controller_orders",
+        "week_of_month",
+        "target_lag5"
+    ]
+}

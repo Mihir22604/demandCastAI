@@ -1,0 +1,63 @@
+name: DemandCast AI CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test-and-validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgomp1 curl
+
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Model Integrity & Checksum Verification
+        run: |
+          python -c "
+          import json, hashlib
+          with open('artifacts/model_metadata.json') as f:
+              meta = json.load(f)
+          expected_hash = meta['serialized_artifacts']['joblib']['sha256_checksum']
+          hasher = hashlib.sha256()
+          with open('artifacts/model.joblib', 'rb') as f:
+              while chunk := f.read(65536):
+                  hasher.update(chunk)
+          actual_hash = hasher.hexdigest()
+          assert actual_hash.lower() == expected_hash.lower(), f'Hash mismatch: {actual_hash} != {expected_hash}'
+          print('Model SHA-256 Checksum Verified:', actual_hash)
+          "
+
+      - name: Execute Automated API Integration & SLA Latency Tests
+        run: |
+          python src/test_stage_13_api.py
+
+      - name: Run Production Monitoring & Drift Diagnostic
+        run: |
+          python src/monitoring.py
+
+      - name: Verify Web UI Compilation
+        run: |
+          python -m py_compile app.py
+
+      - name: Build Docker Containers
+        run: |
+          docker compose build

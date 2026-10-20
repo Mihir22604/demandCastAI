@@ -1,0 +1,75 @@
+{
+  "family": "demandcast-ai-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "1024",
+  "memory": "2048",
+  "executionRoleArn": "arn:aws:iam::123456789012:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "demandcast-api",
+      "image": "123456789012.dkr.ecr.us-east-1.amazonaws.com/demandcast-api:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8000,
+          "hostPort": 8000,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {"name": "API_HOST", "value": "0.0.0.0"},
+        {"name": "API_PORT", "value": "8000"},
+        {"name": "LOKY_MAX_CPU_COUNT", "value": "2"}
+      ],
+      "healthCheck": {
+        "command": ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 10
+      },
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/demandcast-ai",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "api"
+        }
+      }
+    },
+    {
+      "name": "demandcast-ui",
+      "image": "123456789012.dkr.ecr.us-east-1.amazonaws.com/demandcast-ui:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8501,
+          "hostPort": 8501,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {"name": "DEMANDCAST_API_URL", "value": "http://localhost:8000/predict"},
+        {"name": "DEMANDCAST_HEALTH_URL", "value": "http://localhost:8000/health"},
+        {"name": "STREAMLIT_SERVER_PORT", "value": "8501"},
+        {"name": "STREAMLIT_SERVER_ADDRESS", "value": "0.0.0.0"}
+      ],
+      "healthCheck": {
+        "command": ["CMD-SHELL", "curl -f http://localhost:8501/_stcore/health || exit 1"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 10
+      },
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/demandcast-ai",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ui"
+        }
+      }
+    }
+  ]
+}

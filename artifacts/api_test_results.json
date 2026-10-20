@@ -1,0 +1,194 @@
+{
+    "suite_name": "DemandCast AI Stage 13 FastAPI Test Suite",
+    "timestamp_start": "2026-10-20T07:39:36Z",
+    "total_tests": 10,
+    "passed_tests": 10,
+    "failed_tests": 0,
+    "tests": [
+        {
+            "test_id": "TC-01",
+            "test_name": "Root Endpoint Check (GET /)",
+            "passed": true,
+            "details": {
+                "status_code": 200,
+                "response": {
+                    "service": "DemandCast AI - Logistics Demand Operational Capacity API",
+                    "description": "Enterprise machine learning REST service for daily logistics demand forecasting.",
+                    "version": "1.0.0",
+                    "status": "operational",
+                    "docs_url": "/docs",
+                    "redoc_url": "/redoc",
+                    "endpoints": {
+                        "GET /": "Service overview and navigation catalog",
+                        "GET /health": "Health check, uptime, and SHA-256 model verification",
+                        "GET /metadata": "Complete model metadata manifest and feature schemas",
+                        "POST /predict": "Single daily operational demand capacity forecast",
+                        "POST /predict/batch": "High-throughput batch forecast for multi-day planning"
+                    },
+                    "timestamp_utc": "2026-10-20T07:39:38.010362+00:00"
+                }
+            }
+        },
+        {
+            "test_id": "TC-02",
+            "test_name": "Health Check & SHA-256 Integrity (GET /health)",
+            "passed": true,
+            "details": {
+                "status_code": 200,
+                "status": "healthy",
+                "model_integrity": "verified",
+                "model_sha256": "d48a292a42fa87d4eb7b095b12fb6cbcc0b72e6b59289f91651ab38568852416",
+                "uptime_seconds": 1.75
+            }
+        },
+        {
+            "test_id": "TC-03",
+            "test_name": "Metadata Manifest Retrieval (GET /metadata)",
+            "passed": true,
+            "details": {
+                "status_code": 200,
+                "model_version": "1.0.0",
+                "algorithm": "LightGBM Classifier",
+                "feature_count": 8
+            }
+        },
+        {
+            "test_id": "TC-04",
+            "test_name": "Single Prediction: Normal Scenario (POST /predict)",
+            "passed": true,
+            "details": {
+                "status_code": 200,
+                "predicted_tier": 2,
+                "tier_label": "Surge Demand (>340)",
+                "confidence": 0.9214,
+                "probabilities": {
+                    "Low Demand (<240)": 0.0113,
+                    "Normal Demand (240-340)": 0.0673,
+                    "Surge Demand (>340)": 0.9214
+                },
+                "latency_ms": 26.727
+            }
+        },
+        {
+            "test_id": "TC-05",
+            "test_name": "Automatic Feature Derivation Check (POST /predict)",
+            "passed": true,
+            "details": {
+                "status_code": 200,
+                "derived_day_cos": 0.309,
+                "derived_banking_ratio": 0.4,
+                "predicted_tier": 2,
+                "tier_label": "Surge Demand (>340)"
+            }
+        },
+        {
+            "test_id": "TC-06",
+            "test_name": "High Surge Volume Scenario (POST /predict)",
+            "passed": true,
+            "details": {
+                "status_code": 200,
+                "predicted_tier": 2,
+                "tier_label": "Surge Demand (>340)",
+                "probabilities": {
+                    "Low Demand (<240)": 0.0104,
+                    "Normal Demand (240-340)": 0.1414,
+                    "Surge Demand (>340)": 0.8482
+                },
+                "action": "Trigger warehouse overtime shifts, pre-stage dock doors, dispatch reserve 3PL line-haul haulage carriers."
+            }
+        },
+        {
+            "test_id": "TC-07",
+            "test_name": "Boundary Error Intercept: Negative Value (POST /predict)",
+            "passed": true,
+            "details": {
+                "expected_status": 422,
+                "actual_status": 422,
+                "error_detail": [
+                    {
+                        "type": "greater_than_equal",
+                        "loc": [
+                            "body",
+                            "banking_orders_2"
+                        ],
+                        "msg": "Input should be greater than or equal to 0",
+                        "input": -500.0,
+                        "ctx": {
+                            "ge": 0.0
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "test_id": "TC-08",
+            "test_name": "Boundary Error Intercept: Invalid Day of Week (POST /predict)",
+            "passed": true,
+            "details": {
+                "expected_status": 422,
+                "actual_status": 422,
+                "error_detail": [
+                    {
+                        "type": "less_than_equal",
+                        "loc": [
+                            "body",
+                            "day_of_week"
+                        ],
+                        "msg": "Input should be less than or equal to 6",
+                        "input": 7,
+                        "ctx": {
+                            "le": 6
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "test_id": "TC-09",
+            "test_name": "Multi-Day Batch Forecasting (POST /predict/batch)",
+            "passed": true,
+            "details": {
+                "status_code": 200,
+                "total_samples": 5,
+                "tier_distribution": {
+                    "Low Demand (<240)": 0,
+                    "Normal Demand (240-340)": 0,
+                    "Surge Demand (>340)": 5
+                },
+                "mean_confidence": 0.6259,
+                "total_batch_latency_ms": 22.916
+            }
+        },
+        {
+            "test_id": "TC-10",
+            "test_name": "High-Frequency Inference SLA Latency Benchmark",
+            "passed": true,
+            "details": {
+                "iterations": 50,
+                "mean_latency_ms": 5.196,
+                "min_latency_ms": 4.484,
+                "max_latency_ms": 6.919,
+                "p50_latency_ms": 5.026,
+                "p90_latency_ms": 6.086,
+                "p95_latency_ms": 6.327,
+                "p99_latency_ms": 6.663,
+                "sla_threshold_ms": 50.0,
+                "sla_compliance": true
+            }
+        }
+    ],
+    "latency_benchmark": {
+        "benchmark_sample_size": 50,
+        "mean_latency_ms": 5.196,
+        "min_latency_ms": 4.484,
+        "max_latency_ms": 6.919,
+        "p50_latency_ms": 5.026,
+        "p90_latency_ms": 6.086,
+        "p95_latency_ms": 6.327,
+        "p99_latency_ms": 6.663,
+        "sla_target_ms": 50.0,
+        "status": "COMPLIANT"
+    },
+    "verdict": "ALL_TESTS_PASSED",
+    "timestamp_finish": "2026-10-20T07:39:38Z"
+}
